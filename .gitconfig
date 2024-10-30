@@ -1,0 +1,37 @@
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = Lueyo
+	email = 84575656+lueyo@users.noreply.github.com
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+[alias]
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg = !git lg1
+    lga = !git lg --all
+    lga2 = lg2 --all
+    tree = !git log --graph --decorate --all --oneline
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	ac = !git add . && git commit -m
+	prune-branches = !git fetch --prune && git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | xargs -r git branch -d
+[pull]
+	ff = only
+[http]
+	postBuffer = 524288000
+	lowSpeedLimit = 1000
+	lowSpeedTime = 600
+	version = HTTP/1.1
+	sslVerify = true
+	maxRequests = 10
+[core]
+	compression = 0
