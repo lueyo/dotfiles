@@ -150,8 +150,7 @@ PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export HISTSIZE=10000          # Número de comandos a almacenar en el historial de la sesión actual
 export HISTFILESIZE=20000       # Tamaño máximo del archivo de historial (.bash_history)
 
-# Activa automáticamente el entorno virtual de Python si existe un .venv en el directorio actual
-# Almacena el estado de activación del entorno virtual
+# Desactiva el entorno virtual si está activado
 deactivate_venv() {
     if [ -n "$VIRTUAL_ENV" ]; then
         deactivate  # desactiva el entorno virtual si está activado
@@ -159,23 +158,27 @@ deactivate_venv() {
     fi
 }
 
+# Activa el entorno virtual si no hay otro activo y existe .venv en el directorio actual
 activate_venv() {
-    if [ -d ".venv" ]; then
-        if [ -f ".venv/bin/activate" ]; then
+    # Solo intenta activar si no hay un entorno activo
+    if [ -z "$VIRTUAL_ENV" ]; then
+        if [ -d ".venv" ] && [ -f ".venv/bin/activate" ]; then
             source .venv/bin/activate
             echo "Entorno virtual .venv activado"
         fi
-    else
-        deactivate_venv  # desactiva si no hay .venv en el directorio
     fi
 }
 
 # Sobreescribe el comando `cd` para activar/desactivar automáticamente
 cd() {
     builtin cd "$@" || return
+    # Desactiva el entorno si se cambia de directorio sin .venv y uno estaba activo
+    if [ ! -d ".venv" ] && [ -n "$VIRTUAL_ENV" ]; then
+        deactivate_venv
+    fi
+    # Activa el entorno solo si no hay uno activo
     activate_venv
 }
 
 # Verifica el directorio al iniciar la terminal
 activate_venv
-
