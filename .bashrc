@@ -186,4 +186,4 @@ activate_venv
 
 export UUID='^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+#source <(ng completion script)
