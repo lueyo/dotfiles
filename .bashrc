@@ -182,3 +182,8 @@ cd() {
 
 # Verifica el directorio al iniciar la terminal
 activate_venv
+. "$HOME/.cargo/env"
+
+export UUID='^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
+# Load Angular CLI autocompletion.
+source <(ng completion script)
