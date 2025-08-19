@@ -74,8 +74,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    #PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    PS1="\e[1;33m\]\e[1m\u@\h\[\e[34m\][\$(pwd_full)]\[\e[91m\]\$(parse_git_branch)\[\e[32m\]$ \[\e[00m\]"
+    PS1="\[\e[1;33m\]\[\e[1m\]\u@\h\[\e[34m\][\$(pwd_full)]\[\e[91m\]\$(parse_git_branch)\[\e[32m\] \$ \[\e[00m\]"
     ;;
 *)
     ;;
@@ -187,3 +186,13 @@ activate_venv
 export UUID='^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
 # Load Angular CLI autocompletion.
 #source <(ng completion script)
+
+# pnpm
+export PNPM_HOME="/home/toni/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+eval "$(zoxide init bash)"
